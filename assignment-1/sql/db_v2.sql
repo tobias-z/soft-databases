@@ -46,17 +46,16 @@ CREATE TABLE [dbo].[published_item] (
 );
 
 CREATE TABLE [dbo].[genre] (
-    [genre_id]    BIGINT       IDENTITY (1, 1) NOT NULL,
     [name]        VARCHAR (40) NOT NULL,
     [description] TEXT         NOT NULL,
-    CONSTRAINT [PK_genre] PRIMARY KEY CLUSTERED ([genre_id] ASC)
+    CONSTRAINT [PK_genre] PRIMARY KEY CLUSTERED ([name] ASC)
 );
 
 CREATE TABLE [dbo].[published_item_genre] (
-    [published_item_id] BIGINT NOT NULL,
-    [genre_id]          BIGINT NOT NULL,
-    CONSTRAINT [PK_published_item_genre] PRIMARY KEY CLUSTERED ([published_item_id] ASC, [genre_id] ASC),
-    CONSTRAINT [FK_published_item_genre_genre] FOREIGN KEY ([genre_id]) REFERENCES [dbo].[genre] ([genre_id]),
+    [published_item_id] BIGINT       NOT NULL,
+    [genre_name]        VARCHAR (40) NOT NULL,
+    CONSTRAINT [PK_published_item_genre] PRIMARY KEY CLUSTERED ([published_item_id] ASC, [genre_name] ASC),
+    CONSTRAINT [FK_published_item_genre_genre] FOREIGN KEY ([genre_name]) REFERENCES [dbo].[genre] ([name]),
     CONSTRAINT [FK_published_item_genre_published_item] FOREIGN KEY ([published_item_id]) REFERENCES [dbo].[published_item] ([published_item_id])
 );
 

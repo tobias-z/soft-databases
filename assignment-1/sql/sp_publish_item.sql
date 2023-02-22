@@ -4,7 +4,8 @@ CREATE OR ALTER PROCEDURE [dbo].[sp_publish_item]
     @number_of_pages BIGINT,
     @item_type VARCHAR(30),
     @ISBN VARCHAR(20) = NULL,
-    @author_id BIGINT = NULL
+    @author_id BIGINT = NULL,
+    @out_item_id BIGINT OUTPUT
 AS
     IF NOT EXISTS (SELECT 1 FROM publisher as p WHERE p.publisher_id = @publisher_id)
     BEGIN
@@ -21,7 +22,7 @@ AS
         VALUES (@publisher_id, @title, @number_of_pages, 1, GETDATE(), @item_type)
         SET @item_id = @@IDENTITY;
 
-        IF (@item_type = 'book')
+        IF @item_type = 'book'
         BEGIN
             INSERT INTO book (book_id, ISBN, author_id)
             VALUES (@item_id, @ISBN, @author_id);
@@ -33,10 +34,12 @@ AS
         END
         ELSE
         BEGIN
-            DECLARE @error_message VARCHAR(100);
+            DECLARE @error_message VARCHAR;
             SET @error_message = 'The item_type: ' + @item_type + ' is not a known item type';
             THROW 51000, @error_message, 1;
         END
+
+        SET @out_item_id = @item_id;
 
         COMMIT TRANSACTION publish_item;
     END TRY

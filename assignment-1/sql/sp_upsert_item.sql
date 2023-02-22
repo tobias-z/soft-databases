@@ -6,14 +6,17 @@ CREATE OR ALTER PROCEDURE [dbo].[sp_upsert_item]
     @item_type VARCHAR(30),
     @availability BIT,
     @ISBN VARCHAR(20) = NULL,
-    @author_id BIGINT = NULL
+    @author_id BIGINT = NULL,
+    @out_item_id BIGINT OUTPUT
 AS
     -- Because we are doing a relativly large amount of operations in this sp, this likely makes the sp faster.
     SET NOCOUNT ON;
 
     IF NOT EXISTS (SELECT 1 FROM publisher as p WHERE p.publisher_id = @publisher_id)
     BEGIN
-        RAISERROR('No publisher was found with id: %d', 18, 1, @publisher_id);
+        DECLARE @pub_id VARCHAR(100)
+        SET @pub_id = CAST(@publisher_id AS VARCHAR)
+        RAISERROR('No publisher was found with id: %s', 18, 1, @pub_id);
         RETURN -1;
     END
 
@@ -22,6 +25,14 @@ AS
     IF @item_id IS NULL
     BEGIN
         SET @is_update = 0;
+    END
+
+    IF @is_update = 1 AND NOT EXISTS (SELECT 1 FROM published_item pi WHERE pi.published_item_id = @item_id)
+    BEGIN
+        DECLARE @pub_item_id VARCHAR(100)
+        SET @pub_item_id = CAST(@item_id AS VARCHAR)
+        RAISERROR('Unable to update item with id: %s, since it does not exist', 18, 1, @pub_item_id);
+        RETURN -1;
     END
 
     BEGIN TRY
@@ -69,6 +80,8 @@ AS
             SET @error_message = 'The item_type: ' + @item_type + ' is not a known item type';
             THROW 51000, @error_message, 1;
         END
+
+        SET @out_item_id = @item_id;
 
         COMMIT TRANSACTION upsert_item;
     END TRY

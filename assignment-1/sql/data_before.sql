@@ -1,11 +1,17 @@
 DELETE FROM publisher;
+DELETE FROM book;
+DELETE FROM magazine;
 DELETE FROM author;
 DELETE FROM dbo.address;
+DELETE FROM published_item_genre;
+DELETE FROM genre;
+DELETE FROM published_item;
 
 -- For testing purposes this ensures that we always have the same id's
 DBCC CHECKIDENT ('[publisher]', RESEED, 0);
 DBCC CHECKIDENT ('[author]', RESEED, 0);
 DBCC CHECKIDENT ('[address]', RESEED, 0);
+DBCC CHECKIDENT ('[published_item]', RESEED, 0);
 GO
 
 DECLARE @publisher_address_id BIGINT;
