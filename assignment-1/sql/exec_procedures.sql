@@ -54,7 +54,7 @@ EXEC sp_ensure_genre_link
     @genre_name = 'Fantacy',
     @published_item_id = @out_item_id;
 
--- Loan the book
+-- Set the book to unavailable
 EXEC sp_upsert_item
     @item_id = @out_item_id,
     @availability = 0,
