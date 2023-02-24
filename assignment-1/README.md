@@ -20,7 +20,7 @@ By Tobias Zimmermann (cph-tz11@cphbusiness.dk)
 
 This document briefly discusses the CAP theory and ACID principle, and describes how they were applied during the assignment. The complete assignment can be found [here](./documents/database-assignment.pdf).
 
-As the given task was set up in such a way that we could inclemently improve our product, multiple version of the database can be found in the [SQL](./sql) folder.
+As the given task was set up in such a way that we could incrementally improve our product, multiple version of the database can be found in the [SQL](./sql) folder.
 
 ## Explanations
 
@@ -29,6 +29,10 @@ As the given task was set up in such a way that we could inclemently improve our
 ### ACID Principles
 
 ## Designing the Database
+
+### ER Diagram
+
+![ER Diagram](./documents/library-er-diagram.png)
 
 ## Stored Procedures and Transactions
 

@@ -16,30 +16,34 @@ GO
 
 DECLARE @publisher_address_id BIGINT;
 DECLARE @author_address_id BIGINT;
+DECLARE @publisher_id BIGINT;
+DECLARE @author_id BIGINT;
 
 INSERT INTO dbo.address (city_name, postal_code, [address])
 VALUES ('Lyngby', 2800, 'Something 30')
 SET @publisher_address_id = @@IDENTITY;
 
 INSERT INTO publisher ([name], address_id)
-VALUES ('Builders', @publisher_address_id);
+VALUES ('Builders', @publisher_address_id)
+SET @publisher_id = @@IDENTITY;
 
 INSERT INTO dbo.address (city_name, postal_code, [address])
 VALUES ('Lyngby', 2800, 'Something else')
 SET @author_address_id = @@IDENTITY;
 
 INSERT INTO author ([name], address_id)
-VALUES ('Bob the Builder', @author_address_id);
+VALUES ('Bob the Builder', @author_address_id)
+SET @author_id = @@IDENTITY;
 
 DECLARE @out_item_id BIGINT;
 
 EXEC sp_publish_item
-    @publisher_id = 1,
+    @publisher_id = @publisher_id,
     @title = 'Bob Builds',
     @number_of_pages = 150,
     @item_type = 'book',
     @ISBN = '0-5599-9135-5',
-    @author_id = 1,
+    @author_id = @author_id,
     @out_item_id = @out_item_id OUTPUT;
 
 EXEC sp_ensure_genre_link
@@ -58,12 +62,12 @@ EXEC sp_ensure_genre_link
 EXEC sp_upsert_item
     @item_id = @out_item_id,
     @availability = 0,
-    @publisher_id = 1,
+    @publisher_id = @publisher_id,
     @title = 'Bob Builds',
     @number_of_pages = 150,
     @item_type = 'book',
     @ISBN = '0-5599-9135-5',
-    @author_id = 1,
+    @author_id = @author_id,
     @out_item_id = @out_item_id OUTPUT
 
 EXEC sp_upsert_item
@@ -73,7 +77,7 @@ EXEC sp_upsert_item
     @number_of_pages = 20,
     @item_type = 'magazine',
     @ISBN = '0-5599-9135-6',
-    @author_id = 1,
+    @author_id = @author_id,
     @out_item_id = @out_item_id OUTPUT
 
 EXEC sp_ensure_genre_link
@@ -89,3 +93,11 @@ EXEC sp_find_items
 EXEC sp_find_items @item_type = 'book'
 
 EXEC sp_find_items @item_type = 'magazine';
+
+-- Use of the created index
+SELECT * FROM published_item
+WHERE publisher_id = @publisher_id;
+
+-- Use of the created index.
+SELECT * FROM published_item as pi
+WHERE pi.publication_date > CONVERT(date, '2022-01-01');
