@@ -40,9 +40,10 @@ CREATE TABLE [dbo].[published_item] (
     [title]             VARCHAR (50) NOT NULL,
     [publication_date]  DATE         NOT NULL,
     [number_of_pages]   INT          NOT NULL,
-    [availability]      BIT          NOT NULL,
+    [availability]      TINYINT      NOT NULL,
     [item_type]         VARCHAR (30) NOT NULL,
-    CONSTRAINT [PK_published_item] PRIMARY KEY CLUSTERED ([published_item_id] ASC)
+    CONSTRAINT [PK_published_item] PRIMARY KEY CLUSTERED ([published_item_id] ASC),
+    CONSTRAINT [FK_published_item_publisher] FOREIGN KEY ([publisher_id]) REFERENCES [dbo].[publisher] ([publisher_id])
 );
 
 CREATE TABLE [dbo].[genre] (
