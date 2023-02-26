@@ -30,8 +30,6 @@ The CAP theorem is a way to define how a distributed system operates. How does t
 
 The three concepts in the CAP theorem are:
 
-#### Consistency
-
 **Consistency** states that the system state should always be same in all places.
 
 Ex:
@@ -40,8 +38,6 @@ When a request to update data is sent to application 1.
 Then the data is updated on both application 1 and application 2, before the request is said to be OK.
 
 If any update goes wrong anywhere the request is declined.
-
-#### **Availability**
 
 **Availability** states that the system should always be available. Availability in this context means that operations should happen even if the system becomes inconsistent because of it.
 
@@ -52,27 +48,17 @@ Then the data is updated on both application 1, if the request goes right, the s
 
 In this example, if application 2 fails to update its data, or even a request is made to application 2 before the update happens, the responding data could be inconsistent to the data of application 1.
 
-#### **Partition tolerance**
-
 **Partition tolerance** states that given a partition failure, this could be a network error, the system continues to operate.
 
 ### ACID Properties
 
 Help in making sure that we are able to perform transactions reliably.
 
-#### Atomic
-
 **Atomic** states that the whole transaction must finish. If one part of the transaction fails, nothing in that transaction should happen.
-
-#### Consistent
 
 **Consistency** states that data should always be in the correct state. An example of this could be making sure that a constraint on a column is always kept.
 
-#### Isolated
-
 **Isolated** means that a database should be concurrent execution safe. If two requests are made to the same data, the requests should be handled synchronously.
-
-#### Durable
 
 **Durable** states that any committed transaction should be saved, and available for rollbacks. If a transaction successfully completes, it is not said to be OK before the state is committed to memory.
 
