@@ -80,6 +80,8 @@ When dealing with how to best deal with the Book / Magazine thing, it was clear 
 
 ## Stored Procedures and Transactions
 
+*Multiple stored procedures were written, and can be found [here](./sql)*
+
 Using transactions in the stored procedures, provided a way to ensure that our data is never in the wrong state. We are capable of this through the combination of transactions and rollbacks.
 
 Stored procedures also allow us to provide relevant error messages to the users of our queries.
