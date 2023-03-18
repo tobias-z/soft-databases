@@ -35,11 +35,11 @@ pub fn generate_ranks(all_nodes: &Vec<*mut Node>) {
             let next_index = rng.gen::<usize>() % all_nodes.len();
             node = all_nodes.get(next_index).unwrap();
         }
-        should_find_next = visit_nodes(&mut visits, node);
+        should_find_next = visit_node(&mut visits, node);
     }
 }
 
-fn visit_nodes(visits: &mut i32, node: &*mut Node) -> bool {
+fn visit_node(visits: &mut i32, node: &*mut Node) -> bool {
     if visits > &mut 50000000 {
         return false;
     }
@@ -56,7 +56,7 @@ fn visit_nodes(visits: &mut i32, node: &*mut Node) -> bool {
             return true;
         }
         for edge in node.edges.as_mut_slice() {
-            if visit_nodes(visits, edge) {
+            if visit_node(visits, edge) {
                 return true;
             }
         }
