@@ -31,7 +31,7 @@ fn main() {
     node5.add_edge(addr_of_mut!(node4));
     node6.add_edge(addr_of_mut!(node5));
 
-    let mut nodes = vec![
+    let nodes = vec![
         addr_of_mut!(one),
         addr_of_mut!(two),
         addr_of_mut!(three),
@@ -45,7 +45,7 @@ fn main() {
         addr_of_mut!(node6),
     ];
 
-    generate_ranks(&mut nodes);
+    generate_ranks(&nodes);
 
     for node in nodes {
         unsafe {

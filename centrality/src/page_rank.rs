@@ -25,21 +25,21 @@ impl Node {
     }
 }
 
-pub fn generate_ranks(all_nodes: &mut Vec<*mut Node>) {
+pub fn generate_ranks(all_nodes: &Vec<*mut Node>) {
     let mut visits = 0;
     let mut rng = rand::thread_rng();
     let mut should_find_next = true;
-    let mut node = all_nodes.get_mut(0).unwrap();
+    let mut node = all_nodes.get(0).unwrap();
     while visits < 50000000 {
         if should_find_next {
             let next_index = rng.gen::<usize>() % all_nodes.len();
-            node = all_nodes.get_mut(next_index).unwrap();
+            node = all_nodes.get(next_index).unwrap();
         }
         should_find_next = visit_nodes(&mut visits, node);
     }
 }
 
-fn visit_nodes(visits: &mut i32, node: &mut *mut Node) -> bool {
+fn visit_nodes(visits: &mut i32, node: &*mut Node) -> bool {
     if visits > &mut 50000000 {
         return false;
     }
