@@ -5,7 +5,6 @@ pub struct Node {
     pub val: usize,
     edges: Vec<*mut Node>,
     pub rank: i32,
-    visited: bool,
 }
 
 impl Node {
@@ -14,7 +13,6 @@ impl Node {
             val,
             edges: vec![],
             rank: 0,
-            visited: false,
         }
     }
 
