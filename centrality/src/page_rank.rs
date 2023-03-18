@@ -52,13 +52,14 @@ fn visit_nodes(visits: &mut i32, node: &*mut Node) -> bool {
         let node = node.as_mut().unwrap();
         node.increment_rank();
         *visits += 1;
-        let mut next = false;
         if node.edges.is_empty() {
             return true;
         }
         for edge in node.edges.as_mut_slice() {
-            next = visit_nodes(visits, edge);
+            if visit_nodes(visits, edge) {
+                return true;
+            }
         }
-        next
+        false
     }
 }
