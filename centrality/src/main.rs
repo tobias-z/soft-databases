@@ -32,17 +32,17 @@ fn main() {
     node6.add_edge(addr_of_mut!(node5));
 
     let mut nodes = vec![
-        std::ptr::addr_of_mut!(one),
-        std::ptr::addr_of_mut!(two),
-        std::ptr::addr_of_mut!(three),
-        std::ptr::addr_of_mut!(four),
-        std::ptr::addr_of_mut!(five),
-        std::ptr::addr_of_mut!(node1),
-        std::ptr::addr_of_mut!(node2),
-        std::ptr::addr_of_mut!(node3),
-        std::ptr::addr_of_mut!(node4),
-        std::ptr::addr_of_mut!(node5),
-        std::ptr::addr_of_mut!(node6),
+        addr_of_mut!(one),
+        addr_of_mut!(two),
+        addr_of_mut!(three),
+        addr_of_mut!(four),
+        addr_of_mut!(five),
+        addr_of_mut!(node1),
+        addr_of_mut!(node2),
+        addr_of_mut!(node3),
+        addr_of_mut!(node4),
+        addr_of_mut!(node5),
+        addr_of_mut!(node6),
     ];
 
     generate_ranks(&mut nodes);
