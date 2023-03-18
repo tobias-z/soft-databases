@@ -1,6 +1,6 @@
 use rand::Rng;
 
-#[derive(Clone, Debug)]
+#[derive(Debug)]
 pub struct Node {
     pub val: usize,
     edges: Vec<*mut Node>,
