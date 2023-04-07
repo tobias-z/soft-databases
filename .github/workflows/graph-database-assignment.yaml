@@ -85,10 +85,12 @@ jobs:
           version=$(head "Cargo.toml" | grep version | head -n 1 | tr 'version = "' " " | xargs | awk '{print tolower($0)}')
           project_name=$(head "Cargo.toml" | grep name | head -n 1 | sed 's/"//g' | sed 's/name = //g' | xargs | awk '{print tolower($0)}')
           echo "$DOCKER_PASSWORD" | docker login --username $DOCKER_USERNAME --password-stdin
-          image_name="$DOCKER_USERNAME/$project_name:$version"
-          docker build --tag "$image_name" .
-          docker push "$image_name"
+          app_image_name="$DOCKER_USERNAME/$project_name:$version"
+          neo4j_image_name="$DOCKER_USERNAME/$project_name:$version-neo4j"
+          docker build --tag "$app_image_name" .
+          docker build -f neo4j.Dockerfile --tag "$neo4j_image_name" .
+          docker push "$app_image_name"
           curl --request POST \
             --url $SERVER_URL/simple-cd/deploy \
             --header 'Content-Type: application/json' \
-            --data "{\"name\": \"$project_name\", \"giturl\": \"$GITURL\", \"token\": \"$TOKEN\", \"downdir\": \"graph-databases-assignment\", \"invalidate_images\": [\"$image_name\"], \"project_version\": \"$version\"}"
+            --data "{\"name\": \"$project_name\", \"giturl\": \"$GITURL\", \"token\": \"$TOKEN\", \"downdir\": \"graph-databases-assignment\", \"invalidate_images\": [\"$app_image_name\", \"$neo4j_image_name\"], \"project_version\": \"$version\"}"

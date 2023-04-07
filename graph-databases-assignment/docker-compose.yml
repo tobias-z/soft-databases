@@ -2,7 +2,10 @@ version: "3.9"
 
 services:
   neo4j:
-    image: neo4j:latest
+    build:
+      dockerfile: ./neo4j.Dockerfile
+    environment:
+      NEO4J_AUTH: neo4j/12344321
     ports:
       - "7474:7474"
       - "7687:7687"

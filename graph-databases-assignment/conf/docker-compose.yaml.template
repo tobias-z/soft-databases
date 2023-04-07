@@ -9,16 +9,13 @@ volumes:
 
 services:
   $GRAPH_DB_ASSIGNMENT_NEO4J_HOST:
-    image: neo4j:latest
-    ports:
-      - "7474:7474"
-      - "7687:7687"
+    image: tobiaszimmer/graph-databases-assignment:$PROJECT_VERSION-neo4j
     environment:
       NEO4J_AUTH: $GRAPH_DB_ASSIGNMENT_NEO4J_USERNAME/$GRAPH_DB_ASSIGNMENT_NEO4J_PASSWORD
     networks:
       - prod
     volumes:
-      neo4j-data:/data
+      - neo4j-data:/data
     healthcheck:
       test: wget http://localhost:7474 || exit 1
       interval: 1s
