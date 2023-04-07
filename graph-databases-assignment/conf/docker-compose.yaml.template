@@ -19,12 +19,19 @@ services:
       - prod
     volumes:
       neo4j-data:/data
+    healthcheck:
+      test: wget http://localhost:7474 || exit 1
+      interval: 1s
+      timeout: 10s
+      retries: 20
+      start_period: 3s
   graph-databases-assignment:
     container_name: graph-databases-assignment
     image: tobiaszimmer/graph-databases-assignment:$PROJECT_VERSION
     env_file:
       - .env.prod
     depends_on:
-      - $GRAPH_DB_ASSIGNMENT_NEO4J_HOST
+      $GRAPH_DB_ASSIGNMENT_NEO4J_HOST:
+        condition: service_healthy
     networks:
       - prod
