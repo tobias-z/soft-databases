@@ -11,11 +11,6 @@ By Tobias Zimmermann (cph-tz11@cphbusiness.dk)
 - [Introduction](#introduction)
 - [Business Case](#business-case)
 - [Data](#data)
-- [Algorithms](#algorithms)
-- [Dev Environment](#dev-environment)
-  - [Server](#server)
-  - [Web App](#web-app)
-  - [CI and CD](#ci-and-cd)
 
 ## Introduction
 
@@ -32,7 +27,7 @@ We should also be able to figure out if a selected page is important.
 
 The selected data is the `Stanford web graph` which is a graph of pages relevant to Stanford University.
 
-The data was found [here](https://snap.stanford.edu/data/web-Stanford.html) and the zip containing the data can be found [here](./documents/web-Stanford.csv.gz)
+The data was found [here](https://snap.stanford.edu/data/web-Stanford.html) and the zip containing the data can be found [here](./documents/web-Stanford.csv.tar.gz)
 
 The data was modified into a CSV file, and is structured like this:
 

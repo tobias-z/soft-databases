@@ -1,0 +1,3 @@
+- [] Get links for page
+- [] Get most linked to page
+- [] Get most important page (page rank)

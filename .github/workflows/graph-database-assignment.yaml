@@ -90,6 +90,7 @@ jobs:
           docker build --tag "$app_image_name" .
           docker build -f neo4j.Dockerfile --tag "$neo4j_image_name" .
           docker push "$app_image_name"
+          docker push "$neo4j_image_name"
           curl --request POST \
             --url $SERVER_URL/simple-cd/deploy \
             --header 'Content-Type: application/json' \
