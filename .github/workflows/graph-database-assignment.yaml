@@ -4,7 +4,7 @@ on:
       - main
       - develop
     paths:
-      - graph-database-assignment/**
+      - graph-databases-assignment/**
 
 name: Build and Test
 
@@ -13,7 +13,7 @@ permissions:
 
 defaults:
   run:
-    working-directory: graph-database-assignment
+    working-directory: graph-databases-assignment
 
 jobs:
   test:
@@ -91,4 +91,4 @@ jobs:
           curl --request POST \
             --url $SERVER_URL/simple-cd/deploy \
             --header 'Content-Type: application/json' \
-            --data "{\"name\": \"$project_name\", \"giturl\": \"$GITURL\", \"token\": \"$TOKEN\", \"downdir\": \"graph-database-assignment\", \"invalidate_images\": [\"$image_name\"], \"project_version\": \"$version\"}"
+            --data "{\"name\": \"$project_name\", \"giturl\": \"$GITURL\", \"token\": \"$TOKEN\", \"downdir\": \"graph-databases-assignment\", \"invalidate_images\": [\"$image_name\"], \"project_version\": \"$version\"}"
