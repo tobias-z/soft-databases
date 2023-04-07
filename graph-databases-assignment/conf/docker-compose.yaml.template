@@ -1,0 +1,30 @@
+version: "3.9"
+
+networks:
+  prod:
+    external: true
+
+volumes:
+  neo4j-data:
+
+services:
+  $GRAPH_DB_ASSIGNMENT_NEO4J_HOST:
+    image: neo4j:latest
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    environment:
+      NEO4J_AUTH=$GRAPH_DB_ASSIGNMENT_NEO4J_USERNAME/$GRAPH_DB_ASSIGNMENT_NEO4J_PASSWORD
+    networks:
+      - prod
+    volumes:
+      neo4j-data:/data
+  graph-databases-assignment:
+    container_name: graph-databases-assignment
+    image: tobiaszimmer/graph-databases-assignment:$PROJECT_VERSION
+    env_file:
+      - .env.prod
+    depends_on:
+      - $GRAPH_DB_ASSIGNMENT_NEO4J_HOST
+    networks:
+      - prod

@@ -1,0 +1,21 @@
+version: "3.9"
+
+services:
+  primary:
+    image: sqlreplication
+    container_name: primary
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: thisIsSuperStrong1234
+      SA_PASSWORD: thisIsSuperStrong1234
+    ports:
+      - "15111:1433"
+  secondary:
+    image: sqlreplication
+    container_name: secondary
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: thisIsSuperStrong1234
+      SA_PASSWORD: thisIsSuperStrong1234
+    ports:
+      - "15112:1433"
