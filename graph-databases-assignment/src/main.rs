@@ -1,5 +1,6 @@
 pub mod db;
 
+use db::PageScore;
 use dotenv::dotenv;
 use rocket::{
     http::Status,
@@ -75,11 +76,26 @@ async fn average_links() -> WebResult<String> {
     }
 }
 
+#[get("/page/ranks")]
+async fn page_rank() -> WebResult<Json<Vec<PageScore>>> {
+    match db::get_highest_page_rank_nodes().await {
+        Ok(score) => Ok(Json(score)),
+        Err(_) => Err(WebError::new(
+            Status::InternalServerError,
+            "Unable to find page rank results".to_string(),
+        )
+        .into()),
+    }
+}
+
 #[rocket::main]
 async fn main() -> Result<(), rocket::Error> {
     dotenv().ok();
     rocket::build()
-        .mount("/", routes![ping, init, pages_that_link_to, average_links])
+        .mount(
+            "/",
+            routes![ping, init, pages_that_link_to, average_links, page_rank],
+        )
         .launch()
         .await?;
     Ok(())
