@@ -63,11 +63,23 @@ async fn pages_that_link_to(page: u128) -> WebResult<String> {
     }
 }
 
+#[get("/links/average")]
+async fn average_links() -> WebResult<String> {
+    match db::get_average_links().await {
+        Ok(average) => Ok(average.to_string()),
+        Err(_) => Err(WebError::new(
+            Status::InternalServerError,
+            "Unable to find the average".to_string(),
+        )
+        .into()),
+    }
+}
+
 #[rocket::main]
 async fn main() -> Result<(), rocket::Error> {
     dotenv().ok();
     rocket::build()
-        .mount("/", routes![ping, init, pages_that_link_to])
+        .mount("/", routes![ping, init, pages_that_link_to, average_links])
         .launch()
         .await?;
     Ok(())
