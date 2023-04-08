@@ -1,4 +1,4 @@
-use neo4rs::{query, Graph};
+use neo4rs::{query, Graph, Node};
 
 async fn get_graph() -> Graph {
     let host = std::env::var("NEO4J_HOST").expect("Unable to find env value of 'NEO4J_HOST'");
@@ -24,4 +24,27 @@ MERGE (s:Page {id: row.ToNodeId})
 MERGE (f)-[l:Link]->(s);",
         ))
         .await
+}
+
+pub async fn pages_that_link_to(page: u128) -> Result<i64, neo4rs::Error> {
+    let graph = get_graph().await;
+    let result = graph
+        .execute(
+            query(
+                r#"
+MATCH (p:Page {id: $id})
+WITH p MATCH (p) <- [:Link] - (p_from:Page)
+return COUNT(p_from) as c;"#,
+            )
+            .param("id", page.to_string()),
+        )
+        .await;
+    match result {
+        Ok(mut stream) => match stream.next().await {
+            Ok(Some(row)) => Ok(row.get::<i64>("c").unwrap()),
+            Ok(None) => Err(neo4rs::Error::UnknownMessage("unknown error".to_string())),
+            Err(e) => Err(e),
+        },
+        Err(e) => Err(e),
+    }
 }
