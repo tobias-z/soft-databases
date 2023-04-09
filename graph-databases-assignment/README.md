@@ -1,10 +1,11 @@
-<div align="center">
-
 # Graph Databases Assignment
 
-By Tobias Zimmermann (cph-tz11@cphbusiness.dk)
+## Group Members
 
-</div>
+- Mads Bryde, cph-mb870@cphbusiness.dk
+- Mathias Egebjerg Jensen, cph-mj839@cphbusiness.dk
+- Malthe Stefan Woschek, cph-mw202@cphbusiness.dk
+- Tobias Zimmermann, cph-tz11@cphbusiness.dk
 
 ## Table of contents
 
@@ -21,7 +22,7 @@ The assignment can be found [here](./documents/assignment.pdf)
 ## Business Case
 
 The business case is to provide a way to view pages and their links.
-We should also be able to figure out if a selected page is important.
+We should also be able to figure out which pages are important.
 
 ## Data
 
@@ -43,3 +44,54 @@ FromNodeId,ToNodeId
 2,54582
 2,64930
 ```
+
+## Graph operations
+
+### Mads
+
+### Mathias
+
+### Malthe
+
+### Tobias
+
+## Answers to questions under question 7.
+
+a. What are the advantages and disadvantages of using graph databases, and which are the
+best and worse scenarios for it?
+
+b. How would you code in SQL the Cypher statements you developed for your graph-
+algorithms-based query, if the same data was stored in a relational database?
+
+c. How does the DBMS you work with organizes the data storage and the execution of the
+queries?
+
+d. Which methods for scaling and clustering of databases you are familiar with so far?
+
+### Mads
+
+a.
+b.
+c.
+d.
+
+### Mathias
+
+a.
+b.
+c.
+d.
+
+### Malthe
+
+a.
+b.
+c.
+d.
+
+### Tobias
+
+a.
+b.
+c.
+d.

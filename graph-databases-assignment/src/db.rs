@@ -95,8 +95,7 @@ CALL gds.pageRank.write.estimate('pageGraph', {
   writeProperty: 'pageRank',
   maxIterations: 20,
   dampingFactor: 0.85
-});
-        "#,
+});"#,
         ))
         .await
 }
@@ -112,7 +111,7 @@ CALL gds.graph.project(
     {
         relationshipProperties: 'weight'
     }
-"#,
+);"#,
         ))
         .await
 }

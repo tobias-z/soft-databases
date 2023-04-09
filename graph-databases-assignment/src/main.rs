@@ -4,7 +4,6 @@ use db::PageScore;
 use dotenv::dotenv;
 use rocket::{
     http::Status,
-    launch,
     response::status::Custom,
     routes,
     serde::{json::Json, Deserialize, Serialize},
