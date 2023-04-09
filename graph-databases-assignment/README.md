@@ -71,27 +71,39 @@ d. Which methods for scaling and clustering of databases you are familiar with s
 ### Mads
 
 a.
+
 b.
+
 c.
+
 d.
 
 ### Mathias
 
 a.
+
 b.
+
 c.
+
 d.
 
 ### Malthe
 
 a.
+
 b.
+
 c.
+
 d.
 
 ### Tobias
 
 a.
+
 b.
+
 c.
+
 d.
