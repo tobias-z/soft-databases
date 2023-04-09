@@ -55,6 +55,65 @@ FromNodeId,ToNodeId
 
 ### Tobias
 
+For my graph algorithm page rank was chosen. Page rank is a centrality graph algorithm.
+It is used to determine the importance of nodes in a graph, and is heavily used by google and other search engines as one of their variables when determining which pages should be shown at the top of search query.
+
+As our data set is pretty much the same idea, with pages linking to other pages, it made sense to use the page rank algorithm to find the pages that are important in our dataset.
+
+An implementation through neo4j looks as follows:
+
+```cypher
+CALL gds.graph.project(
+    'pageGraph',
+    'Page',
+    'Link',
+    {
+        relationshipProperties: 'weight'
+    }
+);
+
+CALL gds.pageRank.write.estimate('pageGraph', {
+  writeProperty: 'pageRank',
+  maxIterations: 20,
+  dampingFactor: 0.85
+});
+
+CALL gds.pageRank.stream('pageGraph')
+YIELD nodeId, score
+RETURN gds.util.asNode(nodeId).id AS id, score
+ORDER BY score DESC, id ASC;
+```
+
+In the [code](https://github.com/tobias-z/soft-databases/blob/main/graph-databases-assignment/src/db.rs#L60) we are also ensuring that we only create the graph projection and estimage ones.
+
+Let's go through some important bits of the cypher.
+
+1. `gds.graph.project`
+
+Here we are creating a projection of our current graph. This ensures that we are not dealing with the actual graph.
+The projection is important because a lot of algorithms typically needs to be able to mutate specific data.
+It also means that we can make projections of smaller subgraphs of a larger graph.
+If for example we had other nodes in our graph, we would ignore them because they were not selected when creating our projection.
+
+2. `gds.pageRank.write.estimate`
+
+Creating an estimate of the cost of running algorithms on a projection is important because it will ensure that we do not go over our memory limitations later when running the algorithms.
+
+Here we are also setting up an important property `dampingFactor`.
+This property means that for every rank incrementation, we first test if a random number between 0 and 100 is above 85 in our case (so a 15% chance of it being above 85).
+If this number is above 85.
+We will choose another node in the graph randomly.
+This is important to do if your graph is unconnected.
+If you are sure that the graph is connected, it would be faster to not use a dampening factor at all, since then it doesn't need to do the extra calculations.
+
+3. `gds.pageRank.stream`
+
+Here we are executing the page rank algorithm.
+The results are returned as a stream (hence the yield keyword).
+We simply take the node ID and get the node from it, which allows us to return the actual page ID together with the score, ordered by the score which means that the highest score goes to the top.
+
+> If you are interested in a code implementation of page rank, an example of it can be found [here](https://github.com/tobias-z/soft-databases/blob/main/centrality/src/page_rank.rs)
+
 ## Answers to questions under question 7.
 
 a. What are the advantages and disadvantages of using graph databases, and which are the
@@ -92,6 +151,17 @@ d.
 ### Tobias
 
 a.
+
+Graph databases are great when you are dealing with a lot of different relationships.
+Examples of this could be if `some` thing is related to another thing in multiple different ways.
+Graph databases would allow you to simply create as many relation types as you want.
+However, if we were to do this in a relational database we would have to create a bunch of relation tables.
+
+Situations where relational databases might be a better choice would be very structured data, where you know exactly the data you will have and their relations.
+
+Another situation where relational databases could be better would be if you don't have a lot of relations and not a lot of data is being persisted.
+In these situations a relational database with indexing might be faster.
+
 b.
 c.
 d.
