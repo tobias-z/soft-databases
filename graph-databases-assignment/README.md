@@ -213,5 +213,40 @@ Another situation where relational databases could be better would be if you don
 In these situations a relational database with indexing might be faster.
 
 b.
+
+As far as I know running an algorithm like page rank is simply not possible with a relational database.
+So the way I would achieve the goal of getting ranks on pages stored in relational database, is simply by querying the database to give me all the pages and relationships, and then create some code which would transform the pages and links into nodes and relations.
+I could then run a page rank algorithm on them through some kind of page rank implementation.
+
 c.
+
+Data storage is done through a multitude of steps.
+
+All Data stored on disk is a bunch of linked lists of fixed size records.
+
+Nodes hold pointers to relationships and properties, and these "joins" are done at creation time, and not at fetch time.
+This is one of the reasons why inserting into a neo4j graph is quite slow, but fetching multiple nodes also getting their relations (like a join in SQL) is very fast.
+
 d.
+
+- Vertical scaling
+
+Vertical scaling refers to providing your current machine with more power, through increasing things like CPU, memory, storage, etc.
+
+Sometimes when dealing with systems that require a lot of resources to run algorithms it might be beneficial to vertically scale your database.
+Reasons for this might be: You don't really get a lot of requests, but the load happens during single requests. This makes horizontal scaling a bad choice for your use case.
+
+- Horizontal scaling
+
+Horizontal scaling refers to providing more copies of your machine (usually referred to as a node) to a network. This process is far from strait forward, and also introduces a lot of problems when doing so.
+
+If we are talking about a simple application serving users, then a simple load balancer might be adequate, but it also might not, because a lot of your code has to be written in such a way that it supports data consistency in all replicas.
+
+Databases on the other hand have other problems when it comes to distributed systems. Things like the CAP theorem has to be taken into account, and you need to make decisions about what your database is going to support. In the case of relational databases like Postgres, the choice of Consistency and Availability was chosen, but Neo4j has chosen to prioritize Consistency and Partition tolerance.
+
+Some examples of replication methods can be:
+- Primary / Secondary (Read / Write) replications.
+- Sharding (partitioning) which is a way to spread data across multiple different nodes.
+- And many more...
+
+When it comes to scaling of databases, there are many different things that we have to take into account, and make choices depending on the variables of our problem.
