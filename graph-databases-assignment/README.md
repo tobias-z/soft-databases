@@ -49,7 +49,24 @@ FromNodeId,ToNodeId
 
 ### Mads
 
-### Mathias
+### Mathias - `pages_that_link_to`
+```sql
+MATCH (p:Page {id: $id})
+WITH p MATCH (p) <- [:Link] - (p_from:Page)
+return COUNT(p_from) as c;
+```
+
+Short version:
+
+This query finds all the 'Page' nodes in the graph database, which link to a specific 'Page' node determind by the `id` parameter. The query then returns a count of how many 'Page' nodes are linked to the given `id`.
+
+Long version:
+
+1: `MATCH (p:Page {id: $id})` : The first part of the query is matching the `id` parameter to our 'Page' node. This node is saved to the variable `p`.
+
+2: `WITH p MATCH (p) <- [:Link] - (p_from:Page)` : This part of the query uses the variable `p` and calculates how many 'Page' nodes with a `Link` pointing at `p` - these 'Page' nodes are referanced to as `p_from`.
+
+3: `return COUNT(p_from) as c;` : The last part of the query returns a count of how many 'Page' nodes who had a `Link` pointing towards `p` and saves this count in the variable `c`.
 
 ### Malthe - `get_average_links`
 ```sql
