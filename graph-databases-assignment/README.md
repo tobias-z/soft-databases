@@ -48,6 +48,25 @@ FromNodeId,ToNodeId
 ## Graph operations
 
 ### Mads
+```sql
+LOAD CSV WITH HEADERS FROM 'file:///web-Stanford.csv' as row
+MERGE (f:Page {id: row.FromNodeId})
+MERGE (s:Page {id: row.ToNodeId})
+MERGE (f)-[l:Link {weight: 1.0}]->(s);
+```
+
+Short version:
+This query will go and look for a file called `web-Stanford.csv` and load all of the rows. In order to try and insert each of the rows into two different nodes with an attribute linking them together.
+
+Long version:
+
+1. `LOAD CSV WITH HEADERS FROM 'file:///web-Stanford.csv' as row` : This will load all the rows in the file `web-Standford.csv` including the headers of the file. This is useful later when we want to use the headers in order to insert data.
+
+2. `MERGE (f:Page {id: row.FromNodeId})` : The `MERGE` act as a combination of `MATCH` and `CREATE` so the a node matching can me updated or created if it dont exsist. We then assign a `id` property. This Node is called `f`.
+
+3. `MERGE (s:Page {id: row.ToNodeId})` : This is more or less the same as row number 2. But with different `id` property information from the CSV file. This Node is called `s`.
+
+4. `MERGE (f)-[l:Link {weight: 1.0}]->(s);` : This line will link the two nodes together where we are then giving it a attribute called `weight`. 
 
 ### Mathias - `pages_that_link_to`
 ```sql
@@ -164,12 +183,57 @@ d. Which methods for scaling and clustering of databases you are familiar with s
 ### Mads
 
 a.
+Advantages:
+* Flexibility: because you can easily quite complex relationships between different nodes. This can be very useful in systems where you may need flexible data.
+* Performance: Since the database is very optimized for these complex relationships it makes it very fast to fetch data.
+* Scalability: Since you can add more nodes to the graph it can make it easier to handle the growth of the database over time.
+
+Disadvantages:
+
+* Complexity: Since graph databases are more optimized for relationships between entities it's not very suitable for more complex transactions.
+* Not standard: Since graph databases are still quite new there is not really a well defined unified standard for all graph databases. Making it somewhat hard to use.
+* Learning curve: Extending on the non standardization you can also argue that it can be very hard to learn. Since most of the graph databases are very different in the query language and designs.
+
+Best scenarios:
+A best scenario would be an application that requires a very flexible data model. This could be a social network, where you want to recommend different users to each other because they may know one another.
+
+Worst scenarios:
+I already touched a bit about it in the disadvantages section. But anything with a very high degree of complex transactions is not a great place to implement graph databases. This would be in something like a financial system.
+
 
 b.
+First we would need to create two different tabes: `Page` and `Link` this is need in order to link the two together with others. The `Page` would be our table with a primary key called `id`. The `link` table would then just have two columns with `from_node_id` and `to_node_id`.
+
+```sql
+LOAD DATA INFILE '/path/to/web-Stanford.csv'
+INTO TABLE Link
+FIELDS TERMINATED BY ','
+ENCLOSED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 ROWS
+(@from_node_id, @to_node_id, @weight)
+SET from_node_id = CAST(@from_node_id AS SIGNED),
+    to_node_id = CAST(@to_node_id AS SIGNED),
+    weight = CAST(@weight AS FLOAT);
+```
+
+Since we are using a `.csv` file we need to do some special "translation" of the file in order for our sql server to parse it. So we tells it how `FIELDS` are terminated by the `,`. And a `LINES` are seperated by `\n` (new line). Then we just loop through the entire file ignoring the first row since this has the csv headers and is not data we wanna do anything with in this example.
 
 c.
+Data storage:
+Nodes and relationships are stored in a graph structure. Each node and relationship can have properties, witch are key-value pairs that can include information about the nodes relationship. Neo4j uses some proprietary file format for storing the graph data on disk called “Neo4j Store”.
+
+Execution: 
+Cypher is the query language neo4j uses in order to interact with the graph data/database. When a query is executed, neo4j uses a query planner in order to try and optimize the execution plan by first parsing the cypher query and creating an execution plan.
 
 d.
+* Sharding.
+* Replication.
+* Load balancing.
+* Clustered databases.
+* Vertical scaling.
+* Horizontal scaling.
+* Y scaling.
 
 ### Mathias
 
