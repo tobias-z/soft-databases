@@ -238,12 +238,36 @@ d.
 ### Mathias
 
 a.
+Advantages:
+
+First off graph databases are way easier to scale compared to other DBMS. They are also very performance optimized so it's fast and easy to fetch data from the database. Lastly they make the very intuitive to look at, making it easier for businesses to make hard decisions.
+
+Disadvantages:
+
+Given that graph databases are still quite "new" there isn't a very big user-base yet which also means the amount of support available is less then that of other DBMS. Secondly when it comes to queries there isn't any standardized query languages, so the varies from platform to platform.
+
+Best scenario:
+A best case scenario to use graph databases would be a scenario where multiple entities have multiple relations to one another, an example of this could be a social network. 
+
+Worst scenario:
+Any system with a large amount of complex transactions would not benefit from using a graph database. This could be something like businesses who handle finances etc.
+
 
 b.
+First I would create two tables, one to handle the different pages and then another table to handle which pages are linked to eachother. Then select all the pages that are linked with the given `id` and this would return the same result. 
 
 c.
+Graph databases store data in the form of nodes. These nodes can contain multiple data entities and they use edges to store the relationship between entities. Every edge must always have a start node, an end node, a type and a direction. An edge usually describes the relationship between the nodes, an action, who has ownership etc.
+
+Neo4j uses cyphers to execute queries. First the query is compiled into an execution plan, then neo4j executes everything in the execution plan cache and stores the result in the page cache to hold the results in memory and finally returns the result to the client.
 
 d.
+Methods for scaling and clustering:
+
+* Sharding
+* Clustered databases
+* Load balancing
+* Horizontal scaling
 
 ### Malthe
 
