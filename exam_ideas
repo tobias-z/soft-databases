@@ -1,0 +1,7 @@
+- Mongo logging:
+    We can create a process that looks like this:
+
+    - setup logging using something like logback, which will have a defined. This is how a log looks.
+    - run an application which will collect the logs and send them to a second application which will store the logs in a net way, to make them easily queryable.
+
+    This will enable us to have logging for all microservices, and be scalable to the extend that if we want to create clusters of servers, all logs will still be queryable from a single place.
