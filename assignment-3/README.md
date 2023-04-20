@@ -34,3 +34,13 @@ You need a number of things in order to do sharding in MongoDB:
   iv.	Cluster balancer: A mechanism that redistributes data inside the cluster to ensure that it is distributed equally among the shards.
  
 ![Structure](https://i.imgur.com/AfX86T8.png)
+
+
+### c) Explain architecture of sharding in mongoDB?
+
+In mongodb, a sharded cluster is made of 3 parts:
+Shards - A shard contains a subset of the cluster’s data.
+
+Mongos - Mongos is the part that handles the queries from the client applications, both read and write. It delegates the requests from the client to the correct shards and aggregates the response from the shards into a response that gets returned to the client. In other words the client connects to the mongos instead of the individual shards.
+
+Config servers - These are the authoritative source of sharding metadata. This metadata reflects the state and organization of the sharded data. This means that all the lists of sharded collections, routing information etc. is stored in these config servers.
