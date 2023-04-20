@@ -24,9 +24,9 @@ Sharding is typically a technique that is often used when you want to try to par
 ### b) What are the different components required to implement sharding?
 
 You need a number of things in order to do sharding in MongoDB:
-i.	Shard: A single computer or node that houses a subset of the data in a cluster that is sharded.
-ii.	Config servers: A group of nodes that look after the sharded cluster's metadata and configuration data.
-iii. Router or Mongos: A process that sits between an application and a sharded cluster, routing changes and queries to the proper shards.
-iv.	Cluster balancer: A mechanism that redistributes data inside the cluster to ensure that it is distributed equally among the shards.
+  i.	Shard: A single computer or node that houses a subset of the data in a cluster that is sharded.
+  ii.	Config servers: A group of nodes that look after the sharded cluster's metadata and configuration data.
+  iii. Router or Mongos: A process that sits between an application and a sharded cluster, routing changes and queries to the proper shards.
+  iv.	Cluster balancer: A mechanism that redistributes data inside the cluster to ensure that it is distributed equally among the shards.
  
 ![Structure]([https://imgur.com/AfX86T8])
