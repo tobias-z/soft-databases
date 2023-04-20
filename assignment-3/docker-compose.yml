@@ -1,0 +1,48 @@
+version: '3.9'
+
+services:
+  # config
+  mongo-config1:
+    image: mongo:6.0.5
+    command: mongod --port 27017 --configsvr --replSet config-replicaset
+    volumes:
+      - "./config/configsvr/config.js:/scripts/mongo-init.js:ro"
+
+  # shard 1
+  mongo-shard1-svr1:
+    image: mongo:6.0.5
+    command: mongod --port 27018 --shardsvr --replSet shardsvr1
+    volumes:
+      - "./config/shardsvr1/config.js:/scripts/mongo-init.js:ro"
+  mongo-shard1-svr2:
+    image: mongo:6.0.5
+    command: mongod --port 27018 --shardsvr --replSet shardsvr1
+
+  # shard 2
+  mongo-shard2-svr1:
+    image: mongo:6.0.5
+    command: mongod --port 27019 --shardsvr --replSet shardsvr2
+    volumes:
+      - "./config/shardsvr2/config.js:/scripts/mongo-init.js:ro"
+  mongo-shard2-svr2:
+    image: mongo:6.0.5
+    command: mongod --port 27019 --shardsvr --replSet shardsvr2
+
+  # router
+  mongo-router-1:
+    image: mongo:6.0.5
+    command: mongos --port 27017 --configdb config-replicaset/mongo-config1:27017 --bind_ip_all
+    ports:
+      - "27017:27017"
+    volumes:
+      - "./config/router/config.js:/scripts/mongo-init.js:ro"
+
+      # Script to insert the data
+      - ./config/mongorestore.sh:/docker-entrypoint-initdb.d/mongorestore.sh
+      - ./documents/dump:/dump
+    depends_on:
+      - mongo-config1
+      - mongo-shard1-svr1
+      - mongo-shard1-svr2
+      - mongo-shard2-svr1
+      - mongo-shard2-svr2

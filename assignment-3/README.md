@@ -15,6 +15,17 @@
 
 Something great
 
+## Usage
+
+Windows users can either create a PowerShell script or copy each command in the init script 🤣
+
+```bash
+docker compose up -d
+sh init.sh
+```
+
+You should now be able to connect to the router on port 27017 which has the twitter database
+
 ## Assignment Questions
 
 ### a) What is sharding in MongoDB?
@@ -26,15 +37,14 @@ Sharding is typically a technique that is often used when you want to try to par
 You need a number of things in order to do sharding in MongoDB:
 
   i.	Shard: A single computer or node that houses a subset of the data in a cluster that is sharded.
-  
-  ii.	Config servers: A group of nodes that look after the sharded cluster's metadata and configuration data.
-  
-  iii. Router or Mongos: A process that sits between an application and a sharded cluster, routing changes and queries to the proper shards.
-  
-  iv.	Cluster balancer: A mechanism that redistributes data inside the cluster to ensure that it is distributed equally among the shards.
- 
-![Structure](https://i.imgur.com/AfX86T8.png)
 
+  ii.	Config servers: A group of nodes that look after the sharded cluster's metadata and configuration data.
+
+  iii. Router or Mongos: A process that sits between an application and a sharded cluster, routing changes and queries to the proper shards.
+
+  iv.	Cluster balancer: A mechanism that redistributes data inside the cluster to ensure that it is distributed equally among the shards.
+
+![Structure](https://i.imgur.com/AfX86T8.png)
 
 ### c) Explain architecture of sharding in mongoDB?
 
