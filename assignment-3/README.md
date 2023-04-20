@@ -17,6 +17,10 @@ Something great
 
 ## Assignment Questions
 
+### a) What is sharding in MongoDB?
+
+Sharding is typically a technique that is often used when you want to try to partition out data across multiple servers. This is done in order to scale the servers horizontally. Using sharding you are trying to split out the data in smaller partitions called “shards”, which is then distributed out across multiple servers and called “shardservers”. Each shardserver should contain a subset of the total data and as long as the data keeps growing, the more servers are able to be added to the cluster in order to handle the increasing load. In order to use sharding you need to create a sharded cluster that should consist of a configuration server and more shard servers with one or more mongos instances running. The configuration server is in charge of storing the metadata about the sharded cluster while the mongos instances will be acting as proxies between the application that request data and the shardservers.
+
 ### b) What are the different components required to implement sharding?
 
 You need a number of things in order to do sharding in MongoDB:
