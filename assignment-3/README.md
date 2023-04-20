@@ -39,6 +39,7 @@ You need a number of things in order to do sharding in MongoDB:
 ### c) Explain architecture of sharding in mongoDB?
 
 In mongodb, a sharded cluster is made of 3 parts:
+
 Shards - A shard contains a subset of the cluster’s data.
 
 Mongos - Mongos is the part that handles the queries from the client applications, both read and write. It delegates the requests from the client to the correct shards and aggregates the response from the shards into a response that gets returned to the client. In other words the client connects to the mongos instead of the individual shards.
