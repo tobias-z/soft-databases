@@ -33,4 +33,4 @@ You need a number of things in order to do sharding in MongoDB:
   
   iv.	Cluster balancer: A mechanism that redistributes data inside the cluster to ensure that it is distributed equally among the shards.
  
-![Structure]([https://imgur.com/AfX86T8])
+![Structure]([https://i.imgur.com/AfX86T8.png])
