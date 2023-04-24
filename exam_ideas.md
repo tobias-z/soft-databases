@@ -22,7 +22,7 @@ This means that we need to find a project that has multiple parts of things that
 
   - Setup logging to log to stdout.
   - Run an application which will collect the logs and send them to a second application which will store the logs in a neat way, to make them easily queryable through a simple proof of concept query language:
-    e.g. `(container auth-service | level INFO | find "login" | contains "invalid" | sort date DESC | take 30)`
+    e.g. `container auth-service | offset 10m | log_level INFO | find "login" | contains "invalid" | sort date DESC | take 30`
   - Create some sort of UI which will allow us to query the logs and see logs for specific services.
   - Create sharding, where the sharding key could be something like the container name, the date or a combination of both. This would allow us to have very performant queries on specific containers
 
