@@ -11,10 +11,6 @@
 
 - [Introduction](#introduction)
 
-## Introduction
-
-Something great
-
 ## Usage
 
 Windows users can either create a PowerShell script or copy each command in the init script 🤣
@@ -22,15 +18,24 @@ Windows users can either create a PowerShell script or copy each command in the 
 ```bash
 docker compose up -d
 sh init.sh
+
+cd app
+npm run i
+npm run dev
 ```
 
-You should now be able to connect to the router on port 27017 which has the twitter database
+You should now be able to connect to the router on port 27017 which has the twitter database or go to `http://localhost:3000`
 
 ## Assignment Questions
 
+A website was created which contains the ability to get the top 10 hashtags, and to allow creation of new hashtags.
+
 ### a) What is sharding in MongoDB?
 
-Sharding is typically a technique that is often used when you want to try to partition out data across multiple servers. This is done in order to scale the servers horizontally. Using sharding you are trying to split out the data in smaller partitions called “shards”, which is then distributed out across multiple servers and called “shardservers”. Each shardserver should contain a subset of the total data and as long as the data keeps growing, the more servers are able to be added to the cluster in order to handle the increasing load. In order to use sharding you need to create a sharded cluster that should consist of a configuration server and more shard servers with one or more mongos instances running. The configuration server is in charge of storing the metadata about the sharded cluster while the mongos instances will be acting as proxies between the application that request data and the shardservers.
+Sharding is typically a technique that is often used when you want to try to partition out data across multiple servers.
+This is done in order to scale the servers horizontally.
+Using sharding you are trying to split out the data in smaller partitions called “shards”, which is then distributed out across multiple servers and called “shardservers”. Each shardserver should contain a subset of the total data and as long as the data keeps growing, the more servers are able to be added to the cluster in order to handle the increasing load.
+In order to use sharding you need to create a sharded cluster that should consist of a configuration server and more shard servers with one or more mongos instances running. The configuration server is in charge of storing the metadata about the sharded cluster while the mongos instances will be acting as proxies between the application that request data and the shardservers.
 
 ### b) What are the different components required to implement sharding?
 
@@ -55,3 +60,7 @@ Shards - A shard contains a subset of the cluster’s data.
 Mongos - Mongos is the part that handles the queries from the client applications, both read and write. It delegates the requests from the client to the correct shards and aggregates the response from the shards into a response that gets returned to the client. In other words the client connects to the mongos instead of the individual shards.
 
 Config servers - These are the authoritative source of sharding metadata. This metadata reflects the state and organization of the sharded data. This means that all the lists of sharded collections, routing information etc. is stored in these config servers.
+
+### d & e & f)
+
+We implemented this using the aggregate function in MongoDB. It can be found [here](./app/src/pages/api/top-ten.ts)
